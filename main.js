@@ -7,12 +7,12 @@ const firebaseConfig = {
   appId: "1:552286622434:web:a49a53fe669a907c91c4bb",
   measurementId: "G-BXB2FGR5MV",
 };
-
 firebase.initializeApp(firebaseConfig);
 
-var provider = new firebase.auth.GoogleAuthProvider();
+let googleBtn = document.querySelector("#googleBtn");
 
-verificar = () => {
+function googleSingin() {
+  var provider = new firebase.auth.GoogleAuthProvider();
   firebase
     .auth()
     .signInWithPopup(provider)
@@ -36,4 +36,4 @@ verificar = () => {
       var credential = error.credential;
       // ...
     });
-};
+}
