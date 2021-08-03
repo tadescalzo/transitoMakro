@@ -1,6 +1,8 @@
 let logBtn = document.querySelector("#logBtn");
 let usrInput = document.querySelector("#usrInput");
 let pswInput = document.querySelector("#pswInput");
+let loginSection = document.querySelector("#loginSection");
+let navName = document.querySelector(".navName");
 var firebaseConfig = {
   apiKey: "AIzaSyAobg1h5aqprSpyT9T5XMtm9Z2H69z8T64",
   authDomain: "transito-makro.firebaseapp.com",
@@ -13,39 +15,6 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.auth();
 
-/* function googleSingin() {
-  var provider = new firebase.auth.GoogleAuthProvider();
-  firebase
-    .auth()
-    .signInWithPopup(provider)
-    .then(function (result) {
-      // code which runs on success
-      var user = result.user;
-      console.log(user.displayName, user.email);
-    })
-    .catch(function (error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      console.log(errorCode);
-      alert(errorCode);
-
-      var errorMessage = error.message;
-      console.log(errorMessage);
-      alert(errorMessage);
-    });
-}
-
-function googleSingout() {
-  firebase
-    .auth()
-    .signOut()
-    .then(() => {
-      console.log("saliste");
-    })
-    .catch((error) => {
-      console.log("no habia cuenta");
-    });
-} */
 logFunct = (email, password) => {
   firebase
     .auth()
@@ -58,6 +27,12 @@ logFunct = (email, password) => {
     .catch((error) => {
       var errorCode = error.code;
       var errorMessage = error.message;
+      console.log(errorCode);
+      if (errorCode == "auth/wrong-password") {
+        pswInput.style.border = "2px solid #ff6b6b";
+      } else {
+        usrInput.style.border = "2px solid #ff6b6b";
+      }
     });
 };
 
@@ -65,4 +40,15 @@ logBtn.addEventListener("click", () => {
   let password = pswInput.value;
   let email = usrInput.value;
   logFunct(email, password);
+  usrInput.value = "";
+  pswInput.value = "";
+});
+
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    var uid = user.uid;
+    loginSection.style.display = "none";
+    navName.innerHTML = `Bienvenido ${user.displayName}`;
+  } else {
+  }
 });
