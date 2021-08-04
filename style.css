@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap");
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   height: 98vh;
   width: 99vw;
@@ -63,20 +67,22 @@ body {
   display: flex;
 }
 
-.nav {
+.leftNav {
   width: 20%;
   height: 100%;
-  background-color: rgb(149, 149, 251);
-  display: flex;
-  flex-direction: column;
+  background-color: purple;
+  padding-left: 5rem;
   padding-top: 3rem;
-  padding-left: 3rem;
 }
 
-.navList {
+.linkList {
   list-style: none;
-  padding: 0;
-  padding-left: 0.2rem;
+  padding-left: 0;
+  height: 10rem;
+  display: flex;
+  align-content: center;
+  justify-content: space-evenly;
+  flex-direction: column;
 }
 
 a {
@@ -84,8 +90,32 @@ a {
   color: black;
 }
 
+.navName {
+  font-weight: 700;
+}
+
+/*ITEMS*/
+
 .items {
   width: 80%;
   height: 100%;
-  background-color: rgb(255, 145, 255);
+  background-color: black;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 5rem;
+  flex-flow: row wrap;
+}
+
+.itemCard {
+  width: 20%;
+  height: 27%;
+  background-color: white;
+  display: flex;
+  align-content: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+  text-align: center;
+  flex: 1 0 25%;
+  flex-grow: initial;
+  margin: 2rem;
 }
