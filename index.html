@@ -22,7 +22,7 @@
         </a>
         <ul class="linkList">
           <li class="navName">Bienvenido</li>
-          <li><a href="">Agregar item</a></li>
+          <li><a href="" class="linkAdd">Agregar item</a></li>
           <li><a href="">Ver lista de items pendientes</a></li>
           <li><a href="">Borrar item</a></li>
         </ul>
@@ -34,58 +34,49 @@
           <span class="itemCardDesc">Mandaron dos ctcs de nequen y hay que arreglarlas ya</span>
           <span class="itemCardStatus">Urgente como</span>
         </div>
-        <div class="itemCard">
-          <span class="itemCardTitle"> Ctc para neuquen</span>
-          <span class="itemCardTkt"> #230293984585</span>
-          <span class="itemCardDesc">Mandaron dos ctcs de nequen y hay que arreglarlas ya</span>
-          <span class="itemCardStatus">Urgente como</span>
-        </div>
-        <div class="itemCard">
-          <span class="itemCardTitle"> Ctc para neuquen</span>
-          <span class="itemCardTkt"> #230293984585</span>
-          <span class="itemCardDesc">Mandaron dos ctcs de nequen y hay que arreglarlas ya</span>
-          <span class="itemCardStatus">Urgente como</span>
-        </div>
-        <div class="itemCard">
-          <span class="itemCardTitle"> Ctc para neuquen</span>
-          <span class="itemCardTkt"> #230293984585</span>
-          <span class="itemCardDesc">Mandaron dos ctcs de nequen y hay que arreglarlas ya</span>
-          <span class="itemCardStatus">Urgente como</span>
-        </div>
-        <div class="itemCard">
-          <span class="itemCardTitle"> Ctc para neuquen</span>
-          <span class="itemCardTkt"> #230293984585</span>
-          <span class="itemCardDesc">Mandaron dos ctcs de nequen y hay que arreglarlas ya</span>
-          <span class="itemCardStatus">Urgente como</span>
-        </div>
-        <div class="itemCard">
-          <span class="itemCardTitle"> Ctc para neuquen</span>
-          <span class="itemCardTkt"> #230293984585</span>
-          <span class="itemCardDesc">Mandaron dos ctcs de nequen y hay que arreglarlas ya</span>
-          <span class="itemCardStatus">Urgente como</span>
-        </div>
-        <div class="itemCard">
-          <span class="itemCardTitle"> Ctc para neuquen</span>
-          <span class="itemCardTkt"> #230293984585</span>
-          <span class="itemCardDesc">Mandaron dos ctcs de nequen y hay que arreglarlas ya</span>
-          <span class="itemCardStatus">Urgente como</span>
-        </div>
-        <div class="itemCard">
-          <span class="itemCardTitle"> Ctc para neuquen</span>
-          <span class="itemCardTkt"> #230293984585</span>
-          <span class="itemCardDesc">Mandaron dos ctcs de nequen y hay que arreglarlas ya</span>
-          <span class="itemCardStatus">Urgente como</span>
-        </div>
-        <div class="itemCard">
-          <span class="itemCardTitle"> Ctc para neuquen</span>
-          <span class="itemCardTkt"> #230293984585</span>
-          <span class="itemCardDesc">Mandaron dos ctcs de nequen y hay que arreglarlas ya</span>
-          <span class="itemCardStatus">Urgente como</span>
+      </div>
+    </section>
+    <section id="modalSection">
+      <div class="modal">
+        <label for="modalTitle">Ingrese el titulo</label>
+        <input type="text" id="modalTitle">
+        <label for="modalTkt">Ingrese el numero de ticket</label>
+        <input type="text" id="modalTkt">
+        <label for="modalDesc">Ingrese la descripcion</label>
+        <input type="text" id="modalDesc">
+        <select id="options">
+          <option value="Urgente">Urgente</option>
+          <option value="Medianamente urgente">Medianamente urgente</option>
+          <option value="No urgente">No urgente</option>
+        </select>
+        <div class="modalBtns">
+          <input class="modalSubmitBtn" type="button" value="Ingresar">
+          <input class="modalCloseBtn" type="button" value="Cancelar">
         </div>
       </div>
+      <form action="https://getform.io/f/a7b59378-ba7d-4521-81ce-c8966f480929" method="POST">
+        <input type="text" name="name">
+        <input type="email" name="email">
+        <input type="text" name="message">
+        <!-- checkbox handle --> 
+        <input type="checkbox" name="subscribe" value="yes" checked>
+        <input type="hidden" name="subscribe" value="no">
+        <!-- radio button handle --> 
+        <input type="radio" name="gender" value="male" checked>
+        <input type="radio" name="gender" value="female">
+        <input type="radio" name="gender" value="other">
+        <!-- select field handle --> 
+        <select name="work-experience">
+            <option value="one-year">0-1 years</option>
+            <option value="one-five-years">1-5 years</option>
+            <option value="five-plus-years">5+ years</option>
+        </select>
+        <button type="submit">Send</button>
+    </form>
     </section>
     <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
     <script src="main.js"></script>
   </body>
 </html>
