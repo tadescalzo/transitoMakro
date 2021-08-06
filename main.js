@@ -1,9 +1,11 @@
 let logBtn = document.querySelector("#logBtn");
+let logOut = document.querySelector("#logOut");
 let usrInput = document.querySelector("#usrInput");
 let pswInput = document.querySelector("#pswInput");
 let loginSection = document.querySelector("#loginSection");
+let mainSection = document.querySelector("#mainSection");
 let navName = document.querySelector(".navName");
-let linkAdd = document.querySelector(".linkAdd");
+let linkAdd = document.querySelector("#linkAdd");
 let modalSection = document.querySelector("#modalSection");
 let modalSubmitBtn = document.querySelector(".modalSubmitBtn");
 let modalCloseBtn = document.querySelector(".modalCloseBtn");
@@ -11,7 +13,8 @@ let modalTitle = document.querySelector("#modalTitle");
 let modalTkt = document.querySelector("#modalTkt");
 let modalDesc = document.querySelector("#modalDesc");
 let modalType = document.querySelector("#modalType");
-var modalOptions = document.querySelector("#options");
+let modalOptions = document.querySelector("#options");
+let itemsSection = document.querySelector(".items");
 let itemList = new Array();
 var firebaseConfig = {
   apiKey: "AIzaSyAobg1h5aqprSpyT9T5XMtm9Z2H69z8T64",
@@ -32,8 +35,6 @@ logFunct = (email, password) => {
     .signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
       var user = userCredential.user;
-      console.log(user);
-      // ...
     })
     .catch((error) => {
       var errorCode = error.code;
@@ -47,6 +48,17 @@ logFunct = (email, password) => {
     });
 };
 
+logOutFunc = () => {
+  firebase
+    .auth()
+    .signOut()
+    .then(() => {
+      mainSection.style.display = "none";
+      loginSection.style.display = "flex";
+    })
+    .catch((error) => {});
+};
+
 logBtn.addEventListener("click", () => {
   let password = pswInput.value;
   let email = usrInput.value;
@@ -55,61 +67,106 @@ logBtn.addEventListener("click", () => {
   pswInput.value = "";
 });
 
+logOut.addEventListener("click", () => {
+  logOutFunc();
+});
+
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
-    var uid = user.uid;
     loginSection.style.display = "none";
+    mainSection.style.display = "flex";
     navName.innerHTML = `Bienvenido ${user.displayName}`;
+    itemsSection.innerHTML = "";
+    db.collection("itemsTransito")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          let indItem = doc.data();
+          printItem(
+            indItem.title,
+            indItem.tkt,
+            indItem.desc,
+            indItem.urg,
+            indItem.owner
+          );
+        });
+      });
+    linkAdd.addEventListener("click", (e) => {
+      e.preventDefault();
+      modalSection.style.display = "flex";
+    });
+
+    modalCloseBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      modalSection.style.display = "none";
+      modalTitle.value = "";
+      modalTkt.value = "";
+      modalDesc.value = "";
+      modalType.value = "";
+    });
+    modalSubmitBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      title = modalTitle.value;
+      tkt = modalTkt.value;
+      desc = modalDesc.value;
+      urg = modalOptions.options[modalOptions.selectedIndex].value;
+      owner = user.displayName;
+
+      db.collection("itemsTransito")
+        .add({
+          title: this.title,
+          tkt: this.tkt,
+          desc: this.desc,
+          urg: this.urg,
+          owner: this.owner,
+        })
+        .then((docRef) => {
+          itemsSection.innerHTML = "";
+          db.collection("itemsTransito")
+            .get()
+            .then((querySnapshot) => {
+              querySnapshot.forEach((doc) => {
+                let indItem = doc.data();
+                printItem(
+                  indItem.title,
+                  indItem.tkt,
+                  indItem.desc,
+                  indItem.urg,
+                  indItem.owner
+                );
+              });
+            });
+        })
+        .catch((error) => {
+          console.error("Error adding document: ", error);
+        });
+
+      modalSection.style.display = "none";
+      modalTitle.value = "";
+      modalTkt.value = "";
+      modalDesc.value = "";
+    });
   } else {
+    mainSection.style.display = "none";
+    loginSection.style.display = "flex";
   }
 });
 
-linkAdd.addEventListener("click", (e) => {
-  e.preventDefault();
-  modalSection.style.display = "flex";
-});
-
-modalCloseBtn.addEventListener("click", (e) => {
-  e.preventDefault();
-  modalSection.style.display = "none";
-  modalTitle.value = "";
-  modalTkt.value = "";
-  modalDesc.value = "";
-  modalType.value = "";
-});
-
-modalSubmitBtn.addEventListener("click", (e) => {
-  e.preventDefault();
-  title = modalTitle.value;
-  tkt = modalTkt.value;
-  desc = modalDesc.value;
-  var valor = modalOptions.options[modalOptions.selectedIndex].value;
-  console.log(valor);
-
-  db.collection("itemsTransito")
-    .add({
-      title: this.title,
-      tkt: this.tkt,
-      desc: this.desc,
-    })
-    .then((docRef) => {
-      db.collection("itemsTransito")
-        .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            let indItem = doc.data();
-            console.log(
-              `${indItem.desc} => ${indItem.title} => ${indItem.tkt}`
-            );
-          });
-        });
-    })
-    .catch((error) => {
-      console.error("Error adding document: ", error);
-    });
-
-  modalSection.style.display = "none";
-  modalTitle.value = "";
-  modalTkt.value = "";
-  modalDesc.value = "";
-});
+printItem = (title, tkt, desc, urg, owner) => {
+  let model = `<div class="itemCard">
+  <span class="itemCardTitle"> ${title}</span>
+  <hr class='itemCardLine' />
+  <span class="itemCardTkt"> #${tkt}</span>
+  <hr class='itemCardLine' />
+  <span class="itemCardDesc">${desc}</span>
+  <hr class='itemCardLine' />
+  <span class="itemCardStatus">${urg}</span>
+  <hr class='itemCardLine' />
+  <span class="itemCardOwner">Recepcionado por ${owner}</span>
+  <div>
+  <input class="borrarItem" type="button" value="Borrar">
+  <input class="imprimirItem" type="button" value="Imprimir">
+  </div>
+</div>`;
+  itemsSection.innerHTML += model;
+};

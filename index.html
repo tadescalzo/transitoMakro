@@ -17,23 +17,15 @@
     </section>
     <section id="mainSection">
       <nav class="leftNav">
-        <a href="#">
           <img class="logoImg" src="images/logo.png" alt="logo">
-        </a>
         <ul class="linkList">
           <li class="navName">Bienvenido</li>
-          <li><a href="" class="linkAdd">Agregar item</a></li>
-          <li><a href="">Ver lista de items pendientes</a></li>
-          <li><a href="">Borrar item</a></li>
+          <li class="linkNav"><a href="" id="linkAdd"><i class="far fa-plus-square"></i>Agregar item</a></li>
+          <li class="linkNav"><a href=""><i class="far fa-check-circle"></i>Ver items enviados</a></li>
+          <li class="linkNav"><a href="" id="logOut"><i class="fas fa-sign-out-alt"></i>Cerrar sesion</a></li>
         </ul>
       </nav>
       <div class="items">
-        <div class="itemCard">
-          <span class="itemCardTitle"> Ctc para neuquen</span>
-          <span class="itemCardTkt"> #230293984585</span>
-          <span class="itemCardDesc">Mandaron dos ctcs de nequen y hay que arreglarlas ya</span>
-          <span class="itemCardStatus">Urgente como</span>
-        </div>
       </div>
     </section>
     <section id="modalSection">
@@ -77,6 +69,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
+    <script src="https://kit.fontawesome.com/6d0905dba6.js" crossorigin="anonymous"></script>
     <script src="main.js"></script>
   </body>
 </html>
