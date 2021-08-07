@@ -1,75 +1,73 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <section id="loginSection">
-      <div class='loginCard'>
-        <img class="logoImg" src="images/logo.png" alt="logo makro">
-        <input type="text" placeholder="Mail" id="usrInput" >
-        <input type="password" placeholder="Contraseña" id="pswInput" >
-        <input type="button" value='Log in' id="logBtn">
-      </div>
-    </section>
-    <section id="mainSection">
-      <nav class="leftNav">
-          <img class="logoImg" src="images/logo.png" alt="logo">
-        <ul class="linkList">
-          <li class="navName">Bienvenido</li>
-          <li class="linkNav"><a href="" id="linkAdd"><i class="far fa-plus-square"></i>Agregar item</a></li>
-          <li class="linkNav"><a href=""><i class="far fa-check-circle"></i>Ver items enviados</a></li>
-          <li class="linkNav"><a href="" id="logOut"><i class="fas fa-sign-out-alt"></i>Cerrar sesion</a></li>
-        </ul>
-      </nav>
-      <div class="items">
-      </div>
-    </section>
-    <section id="modalSection">
-      <div class="modal">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Welcome to Firebase Hosting</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <section id="loginSection">
+    <div class='loginCard'>
+      <img class="logoImg" src="images/logo.png" alt="logo makro">
+      <input type="text" placeholder="Mail" id="usrInput">
+      <input type="password" placeholder="Contraseña" id="pswInput">
+      <input type="button" value='Log in' id="logBtn">
+    </div>
+  </section>
+  <section id="mainSection">
+    <nav class="leftNav">
+      <img class="logoImg" src="images/logo.png" alt="logo">
+      <ul class="linkList">
+        <li class="navName">Bienvenido</li>
+        <li class="linkNav"><a href="" id="linkAdd"><i class="far fa-plus-square"></i>Agregar item</a></li>
+        <li class="linkNav"><a href=""><i class="fas fa-store"></i>Items por tienda</a></li>
+        <li class="linkNav"><a href=""><i class="far fa-check-circle"></i>Ver items enviados</a></li>
+        <li class="linkNav"><a href="" id="logOut"><i class="fas fa-sign-out-alt"></i>Cerrar sesion</a></li>
+      </ul>
+    </nav>
+    <div class="items">
+    </div>
+  </section>
+
+  <section id="modalSection">
+    <div class="modal">
+
+      <div class="column">
         <label for="modalTitle">Ingrese el titulo</label>
-        <input type="text" id="modalTitle">
-        <label for="modalTkt">Ingrese el numero de ticket</label>
-        <input type="text" id="modalTkt">
-        <label for="modalDesc">Ingrese la descripcion</label>
-        <input type="text" id="modalDesc">
-        <select id="options">
-          <option value="Urgente">Urgente</option>
-          <option value="Medianamente urgente">Medianamente urgente</option>
-          <option value="No urgente">No urgente</option>
-        </select>
-        <div class="modalBtns">
-          <input class="modalSubmitBtn" type="button" value="Ingresar">
-          <input class="modalCloseBtn" type="button" value="Cancelar">
-        </div>
+        <input autocomplete="off" type="text" id="modalTitle">
       </div>
-      <form action="https://getform.io/f/a7b59378-ba7d-4521-81ce-c8966f480929" method="POST">
-        <input type="text" name="name">
-        <input type="email" name="email">
-        <input type="text" name="message">
-        <!-- checkbox handle --> 
-        <input type="checkbox" name="subscribe" value="yes" checked>
-        <input type="hidden" name="subscribe" value="no">
-        <!-- radio button handle --> 
-        <input type="radio" name="gender" value="male" checked>
-        <input type="radio" name="gender" value="female">
-        <input type="radio" name="gender" value="other">
-        <!-- select field handle --> 
-        <select name="work-experience">
-            <option value="one-year">0-1 years</option>
-            <option value="one-five-years">1-5 years</option>
-            <option value="five-plus-years">5+ years</option>
-        </select>
-        <button type="submit">Send</button>
-    </form>
-    </section>
-    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
-    <script src="https://kit.fontawesome.com/6d0905dba6.js" crossorigin="anonymous"></script>
-    <script src="main.js"></script>
-  </body>
+
+      <div class="column">
+        <label for="modalTkt">Ingrese el numero de ticket</label>
+        <input autocomplete="off" type="text" id="modalTkt">
+      </div>
+
+      <div class="column">
+        <label for="modalDesc">Ingrese la descripcion</label>
+        <input autocomplete="off" type="text" id="modalDesc">
+      </div>
+
+      <select id="options">
+        <option value="Urgente">Urgente</option>
+        <option value="Medianamente urgente">Medianamente urgente</option>
+        <option value="No urgente">No urgente</option>
+      </select>
+
+      <div class="modalBtns">
+        <input class="modalSubmitBtn" type="button" value="Ingresar">
+        <input class="modalCloseBtn" type="button" value="Cancelar">
+      </div>
+
+    </div>
+  </section>
+  <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
+  <script src="https://kit.fontawesome.com/6d0905dba6.js" crossorigin="anonymous"></script>
+  <script src="main.js"></script>
+</body>
+
 </html>

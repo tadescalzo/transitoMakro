@@ -72,7 +72,7 @@ logOut.addEventListener("click", () => {
 });
 
 firebase.auth().onAuthStateChanged((user) => {
-  if (user) {
+  if (user) {    
     loginSection.style.display = "none";
     mainSection.style.display = "flex";
     navName.innerHTML = `Bienvenido ${user.displayName}`;
@@ -87,7 +87,9 @@ firebase.auth().onAuthStateChanged((user) => {
             indItem.tkt,
             indItem.desc,
             indItem.urg,
-            indItem.owner
+            indItem.store,
+            indItem.owner,
+            indItem.date
           );
         });
       });
@@ -111,14 +113,18 @@ firebase.auth().onAuthStateChanged((user) => {
       desc = modalDesc.value;
       urg = modalOptions.options[modalOptions.selectedIndex].value;
       owner = user.displayName;
-
+      date =  new Date().toLocaleDateString();
+      store = user.photoURL
+      console.log(title,tkt,desc,urg,owner,date,store);
       db.collection("itemsTransito")
         .add({
           title: this.title,
           tkt: this.tkt,
           desc: this.desc,
           urg: this.urg,
+          store: this.store,
           owner: this.owner,
+          date: this.date
         })
         .then((docRef) => {
           itemsSection.innerHTML = "";
@@ -132,7 +138,9 @@ firebase.auth().onAuthStateChanged((user) => {
                   indItem.tkt,
                   indItem.desc,
                   indItem.urg,
-                  indItem.owner
+                  indItem.store,
+                  indItem.owner,
+                  indItem.date
                 );
               });
             });
@@ -152,17 +160,20 @@ firebase.auth().onAuthStateChanged((user) => {
   }
 });
 
-printItem = (title, tkt, desc, urg, owner) => {
+printItem = (title, tkt, desc, urg, store, owner, date) => {
   let model = `<div class="itemCard">
   <span class="itemCardTitle"> ${title}</span>
   <hr class='itemCardLine' />
-  <span class="itemCardTkt"> #${tkt}</span>
+  <span class="itemCardTkt"> Ticket #${tkt}</span>
   <hr class='itemCardLine' />
   <span class="itemCardDesc">${desc}</span>
   <hr class='itemCardLine' />
-  <span class="itemCardStatus">${urg}</span>
+  <span class="itemCardStatus">Estado: ${urg}</span>
+  <hr class='itemCardLine' />
+  <span class='itemCardStore'>Enviado de tienda ${store}</span>
   <hr class='itemCardLine' />
   <span class="itemCardOwner">Recepcionado por ${owner}</span>
+  <span class='itemCardDate'>${date}</span>
   <div>
   <input class="borrarItem" type="button" value="Borrar">
   <input class="imprimirItem" type="button" value="Imprimir">

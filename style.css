@@ -1,17 +1,26 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap");
 
+:root{
+  --darker-grey: #333;
+  --lighter-grey: rgb(87, 87, 87);
+  --semi-white : #f4f4f4;
+  --success-green:#79ff8b;
+  --cancel-red: #fd7c86;
+}
+
 * {
   box-sizing: border-box;
 }
 a {
   text-decoration: none;
-  color: #333;
+  color: #f4f4f4;
+  transition: 0.3s;
 }
 
 body {
   height: 100vh;
   width: 100vw;
-  background-color: #f4f4f4;
+  background-color: var(--semi-white);
   font-family: "Roboto", sans-serif;
   margin: 0;
   position: relative;
@@ -27,7 +36,30 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  overflow: hidden;
 }
+
+#loginSection::before{
+  content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: #fff; 
+    background-image: url('images/home.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    transform: scale(1.1);
+    filter: blur(10px);
+}
+
 
 .loginCard {
   width: 30rem;
@@ -36,23 +68,12 @@ body {
   align-items: center;
   justify-content: space-evenly;
   flex-direction: column;
-  background-color: rgb(155, 155, 155);
+  background-color: var(--lighter-grey);
   border-radius: 1em;
   font-family: "Roboto", sans-serif;
+  z-index: 2;
 }
 
-#usrInput,
-#pswInput {
-  width: 20rem;
-  height: 3rem;
-  text-align: center;
-  background-color: #f4f4f4;
-  outline: none;
-  border: none;
-  border-radius: 0.2em;
-  font-family: "Roboto", sans-serif;
-  font-weight: 700;
-}
 
 #logBtn {
   width: 10rem;
@@ -62,6 +83,14 @@ body {
   border-radius: 0.2em;
   font-family: "Roboto", sans-serif;
   font-weight: 700;
+  background: none;
+  border: 1px solid var(--semi-white);
+  transition: 0.3s;
+}
+
+#logBtn:hover{
+  background: var(--semi-white);
+  color: var(--darker-grey);
 }
 
 /*MAIN*/
@@ -75,7 +104,7 @@ body {
 .leftNav {
   width: 10%;
   height: 100%;
-  background-color: #ff9aa2;
+  background-color: rgb(87, 87, 87);
   padding-top: 3rem;
   display: flex;
   flex-direction: column;
@@ -92,11 +121,12 @@ body {
   flex-direction: column;
   width: 100%;
   text-align: center;
+  color: #f4f4f4;
 }
 
 .linkNav {
   text-decoration: none;
-  color: black;
+  color: #f4f4f4;
   width: 100%;
   padding: 0.5rem;
   text-align: center;
@@ -104,8 +134,8 @@ body {
   font-weight: 400;
 }
 
-.linkNav:hover {
-  background-color: #f4f4f4;
+.linkNav:hover a{
+  color: #fd7c86;
 }
 .fas,
 .far {
@@ -121,7 +151,7 @@ body {
 .items {
   width: 90%;
   height: 100%;
-  background-color: #f4f4f4;
+  background-color: #333;
   display: flex;
   justify-content: space-evenly;
   align-content: flex-start;
@@ -132,17 +162,18 @@ body {
 .itemCard {
   width: 20%;
   height: 35%;
-  background-color: white;
+  background-color: rgb(87, 87, 87);
   display: flex;
   align-content: center;
   justify-content: space-evenly;
   flex-direction: column;
   text-align: center;
-  flex: 1 0 25%;
+  flex: 1 0 20%;
   flex-grow: initial;
   margin: 2rem;
   border-radius: 0.3rem;
   filter: drop-shadow(0 0 0.75rem #58585836);
+  color: #f4f4f4;
 }
 
 .itemCardLine {
@@ -153,7 +184,7 @@ body {
 }
 
 .borrarItem,
-.imprimirItem {
+.imprimirItem, .modalSubmitBtn, .modalCloseBtn {
   border: none;
   width: 40%;
   height: 2rem;
@@ -161,11 +192,11 @@ body {
   transition: 0.3s;
 }
 
-.borrarItem {
+.borrarItem, .modalCloseBtn {
   background-color: #fd7c86;
 }
 
-.imprimirItem {
+.imprimirItem, .modalSubmitBtn {
   background-color: #79ff8b;
 }
 
@@ -198,13 +229,14 @@ body {
 }
 
 .modal {
-  width: 50%;
+  width: 40%;
   height: 50%;
-  background-color: #f4f4f4;
+  background-color: #333;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
   flex-direction: column;
+  color: #f4f4f4;
 }
 
 .modalBtns {
@@ -227,4 +259,28 @@ body {
 .modalCloseBtn:active,
 .modalSubmitBtn:active {
   background-color: rgb(255, 219, 219);
+}
+
+.column{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+#modalDesc, #modalTkt, #modalTitle, #options, #usrInput, #pswInput{
+  background: none;
+  border: none;
+  border-bottom: 2px solid #f4f4f4;
+  outline: none;
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  color: #f4f4f4;
+  width: 50%;
+  font-family: "Roboto", sans-serif;
+}
+
+option{
+  color: #333;
 }
