@@ -1,11 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap");
 
-:root{
+:root {
   --darker-grey: #333;
   --lighter-grey: rgb(87, 87, 87);
-  --semi-white : #f4f4f4;
-  --success-green:#79ff8b;
+  --semi-white: #f4f4f4;
+  --success-green: #79ff8b;
   --cancel-red: #fd7c86;
+  --info-blue: #7cc9fd;
 }
 
 * {
@@ -40,26 +41,25 @@ body {
   overflow: hidden;
 }
 
-#loginSection::before{
-  content: '';
-    display: block;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background: #fff; 
-    background-image: url('images/home.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    transform: scale(1.1);
-    filter: blur(10px);
+#loginSection::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: #fff;
+  background-image: url("images/home.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  transform: scale(1.1);
+  filter: blur(10px);
 }
-
 
 .loginCard {
   width: 30rem;
@@ -72,12 +72,12 @@ body {
   border-radius: 1em;
   font-family: "Roboto", sans-serif;
   z-index: 2;
+  position: relative;
 }
 
-
 #logBtn {
-  width: 10rem;
-  height: 3rem;
+  width: 50%;
+  height: 2.5rem;
   outline: none;
   border: none;
   border-radius: 0.2em;
@@ -88,9 +88,52 @@ body {
   transition: 0.3s;
 }
 
-#logBtn:hover{
-  background: var(--semi-white);
+.forgotPw {
+  font-size: 0.7rem;
+  position: absolute;
+  top: 14.5rem;
+  right: 7.5rem;
+}
+
+.regText {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+#regBtn {
+  color: #fd7c86;
+}
+
+.forgotPw {
+  color: #fd7c86;
+}
+
+/*REGISTER MODAL*/
+
+#registerModal {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 2;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.692);
+  transition: 0.4s;
+}
+
+#logBtn:hover {
+  background: var(--success-green);
   color: var(--darker-grey);
+}
+
+.logForm {
+  width: 100%;
+  height: 75%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
 }
 
 /*MAIN*/
@@ -134,7 +177,7 @@ body {
   font-weight: 400;
 }
 
-.linkNav:hover a{
+.linkNav:hover a {
   color: #fd7c86;
 }
 .fas,
@@ -184,7 +227,11 @@ body {
 }
 
 .borrarItem,
-.imprimirItem, .modalSubmitBtn, .modalCloseBtn {
+.imprimirItem,
+.modalSubmitBtn,
+.modalCloseBtn,
+.modalCancelBtn,
+.modalRegisterBtn {
   border: none;
   width: 40%;
   height: 2rem;
@@ -192,11 +239,15 @@ body {
   transition: 0.3s;
 }
 
-.borrarItem, .modalCloseBtn {
+.borrarItem,
+.modalCloseBtn,
+.modalCancelBtn {
   background-color: #fd7c86;
 }
 
-.imprimirItem, .modalSubmitBtn {
+.imprimirItem,
+.modalSubmitBtn,
+.modalRegisterBtn {
   background-color: #79ff8b;
 }
 
@@ -261,7 +312,7 @@ body {
   background-color: rgb(255, 219, 219);
 }
 
-.column{
+.column {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -269,7 +320,17 @@ body {
   width: 100%;
 }
 
-#modalDesc, #modalTkt, #modalTitle, #options, #usrInput, #pswInput{
+#modalDesc,
+#modalTkt,
+#modalTitle,
+#options,
+#usrInput,
+#pswInput,
+#modalUser,
+#modalEmail,
+#modalStore,
+#optionsReg,
+#modalPwd {
   background: none;
   border: none;
   border-bottom: 2px solid #f4f4f4;
@@ -279,8 +340,32 @@ body {
   color: #f4f4f4;
   width: 50%;
   font-family: "Roboto", sans-serif;
+  background-image: linear-gradient(
+    90deg,
+    rgba(99, 0, 0, 1) 0%,
+    rgba(121, 9, 9, 1) 49%,
+    rgba(255, 255, 255, 1) 100%
+  );
+  background-size: 0% 2px;
+  background-repeat: no-repeat;
+  background-position: bottom left;
+  transition: 0.1s ease;
 }
 
-option{
+#modalDesc:focus,
+#modalTkt:focus,
+#modalTitle:focus,
+#options:focus,
+#usrInput:focus,
+#pswInput:focus,
+#modalUser:focus,
+#modalEmail:focus,
+#modalStore:focus,
+#optionsReg:focus,
+#modalPwd:focus {
+  background-size: 100% 2px;
+}
+
+option {
   color: #333;
 }

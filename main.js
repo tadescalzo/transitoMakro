@@ -1,5 +1,6 @@
 let logBtn = document.querySelector("#logBtn");
 let logOut = document.querySelector("#logOut");
+let regBtn = document.querySelector("#regBtn");
 let usrInput = document.querySelector("#usrInput");
 let pswInput = document.querySelector("#pswInput");
 let loginSection = document.querySelector("#loginSection");
@@ -15,6 +16,13 @@ let modalDesc = document.querySelector("#modalDesc");
 let modalType = document.querySelector("#modalType");
 let modalOptions = document.querySelector("#options");
 let itemsSection = document.querySelector(".items");
+let modalRegisterBtn = document.querySelector(".modalRegisterBtn");
+let modalCancelBtn = document.querySelector(".modalCancelBtn");
+let modalUser = document.querySelector("#modalUser");
+let modalPwd = document.querySelector("#modalPwd");
+let modalEmail = document.querySelector("#modalEmail");
+let modalStore = document.querySelector("#modalStore");
+let registerModal = document.querySelector("#registerModal");
 let itemList = new Array();
 var firebaseConfig = {
   apiKey: "AIzaSyAobg1h5aqprSpyT9T5XMtm9Z2H69z8T64",
@@ -59,6 +67,29 @@ logOutFunc = () => {
     .catch((error) => {});
 };
 
+regFunc = (email, password) => {
+  firebase
+    .auth()
+    .createUserWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      db.collection(userCredential)
+        .add({
+          email: userCredential.email,
+        })
+        .then((docRef) => {
+          console.log("Document written with ID: ", docRef.id);
+        })
+        .catch((error) => {
+          console.error("Error adding document: ", error);
+        });
+    })
+    .catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log(email, password);
+    });
+};
+
 logBtn.addEventListener("click", () => {
   let password = pswInput.value;
   let email = usrInput.value;
@@ -71,8 +102,26 @@ logOut.addEventListener("click", () => {
   logOutFunc();
 });
 
+regBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  registerModal.style.display = "flex";
+});
+
+modalRegisterBtn.addEventListener("click", () => {
+  email = modalEmail.value;
+  password = modalPwd.value;
+  regFunc(email, password);
+  modalEmail.value = "";
+  modalPwd.value = "";
+  registerModal.style.display = "none";
+});
+
+modalCancelBtn.addEventListener("click", () => {
+  registerModal.style.display = "none";
+});
+
 firebase.auth().onAuthStateChanged((user) => {
-  if (user) {    
+  if (user) {
     loginSection.style.display = "none";
     mainSection.style.display = "flex";
     navName.innerHTML = `Bienvenido ${user.displayName}`;
@@ -93,12 +142,13 @@ firebase.auth().onAuthStateChanged((user) => {
           );
         });
       });
+
     linkAdd.addEventListener("click", (e) => {
       e.preventDefault();
       modalSection.style.display = "flex";
     });
 
-    modalCloseBtn.addEventListener("click", (e) => {
+    regBtn.addEventListener("click", (e) => {
       e.preventDefault();
       modalSection.style.display = "none";
       modalTitle.value = "";
@@ -113,9 +163,9 @@ firebase.auth().onAuthStateChanged((user) => {
       desc = modalDesc.value;
       urg = modalOptions.options[modalOptions.selectedIndex].value;
       owner = user.displayName;
-      date =  new Date().toLocaleDateString();
-      store = user.photoURL
-      console.log(title,tkt,desc,urg,owner,date,store);
+      date = new Date().toLocaleDateString();
+      store = user.photoURL;
+      console.log(title, tkt, desc, urg, owner, date, store);
       db.collection("itemsTransito")
         .add({
           title: this.title,
@@ -124,7 +174,7 @@ firebase.auth().onAuthStateChanged((user) => {
           urg: this.urg,
           store: this.store,
           owner: this.owner,
-          date: this.date
+          date: this.date,
         })
         .then((docRef) => {
           itemsSection.innerHTML = "";

@@ -12,10 +12,33 @@
   <section id="loginSection">
     <div class='loginCard'>
       <img class="logoImg" src="images/logo.png" alt="logo makro">
-      <input type="text" placeholder="Mail" id="usrInput">
-      <input type="password" placeholder="Contraseña" id="pswInput">
-      <input type="button" value='Log in' id="logBtn">
+      <form class="logForm" action="submit">
+        <input type="text" placeholder="Mail" id="usrInput">
+        <input type="password" placeholder="Contraseña" id="pswInput">
+        <input type="button" value='Log in' id="logBtn">
+        <span class="regText">¿No tenes cuenta? <a href="" id="regBtn">Registrarse</a></span>
+        <a href="" class="forgotPw">¿Olvidaste tu contraseña?</a>
+      </form>
     </div>
+    <section id="registerModal">
+      <div class="modal">
+      <div class="column">
+        <label for="modalEmail">Ingrese su mail de Makro</label>
+        <input autocomplete="off" type="email" id="modalEmail">
+      </div>
+
+      <div class="column">
+        <label for="modalPwd">Ingrese su contraseña</label>
+        <input autocomplete="off" type="password" id="modalPwd">
+      </div>
+
+      <div class="modalBtns">
+        <input class="modalRegisterBtn" type="button" value="Registrar">
+        <input class="modalCancelBtn" type="button" value="Cancelar">
+      </div>
+    </div>
+    </section>
+    
   </section>
   <section id="mainSection">
     <nav class="leftNav">
