@@ -13,8 +13,15 @@
     <div class='loginCard'>
       <img class="logoImg" src="images/logo.png" alt="logo makro">
       <form class="logForm" action="submit">
-        <input type="text" placeholder="Mail" id="usrInput">
-        <input type="password" placeholder="Contraseña" id="pswInput">
+        <span>Bienvenido</span>
+        <div class="iconInput">
+          <i class="far fa-envelope"></i>
+          <input type="text" placeholder="Mail" id="usrInput">
+        </div>
+        <div class="iconInput">
+          <i class="fas fa-key"></i>
+          <input type="password" placeholder="Contraseña" id="pswInput">
+        </div>
         <input type="button" value='Log in' id="logBtn">
         <span class="regText">¿No tenes cuenta? <a href="" id="regBtn">Registrarse</a></span>
         <a href="" class="forgotPw">¿Olvidaste tu contraseña?</a>
@@ -24,12 +31,19 @@
       <div class="modal">
       <div class="column">
         <label for="modalEmail">Ingrese su mail de Makro</label>
-        <input autocomplete="off" type="email" id="modalEmail">
+        <div class="iconInput">
+          <i class="far fa-envelope"></i>
+          <input autocomplete="off" type="email" id="modalEmail">
+        </div>
       </div>
 
       <div class="column">
         <label for="modalPwd">Ingrese su contraseña</label>
-        <input autocomplete="off" type="password" id="modalPwd">
+        <div class="iconInput">
+          <i class="fas fa-key"></i>
+          <input autocomplete="off" type="password" id="modalPwd">
+        </div>
+        
       </div>
 
       <div class="modalBtns">

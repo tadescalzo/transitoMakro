@@ -1,12 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap");
 
 :root {
-  --darker-grey: #333;
-  --lighter-grey: rgb(87, 87, 87);
+  --darker-grey: rgb(85, 85, 85);
+  --lighter-grey: rgb(228, 228, 228);
   --semi-white: #f4f4f4;
   --success-green: #79ff8b;
   --cancel-red: #fd7c86;
-  --info-blue: #7cc9fd;
+  --info-blue: #6ea0ff;
 }
 
 * {
@@ -14,7 +14,7 @@
 }
 a {
   text-decoration: none;
-  color: #f4f4f4;
+  color: var(--darker-grey);
   transition: 0.3s;
 }
 
@@ -62,16 +62,26 @@ body {
 }
 
 .loginCard {
-  width: 30rem;
-  height: 25rem;
+  width: 25rem;
+  height: 35rem;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
   flex-direction: column;
-  background-color: var(--lighter-grey);
   border-radius: 1em;
   font-family: "Roboto", sans-serif;
   z-index: 2;
+}
+
+.logForm {
+  width: 100%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: var(--semi-white);
+  border-radius: 1rem;
   position: relative;
 }
 
@@ -84,15 +94,21 @@ body {
   font-family: "Roboto", sans-serif;
   font-weight: 700;
   background: none;
-  border: 1px solid var(--semi-white);
+  border: 1px solid var(--info-blue);
   transition: 0.3s;
+  cursor: pointer;
+}
+
+#logBtn:hover {
+  background: var(--info-blue);
+  color: var(--darker-grey);
 }
 
 .forgotPw {
   font-size: 0.7rem;
   position: absolute;
-  top: 14.5rem;
-  right: 7.5rem;
+  top: 16rem;
+  right: 6.5rem;
 }
 
 .regText {
@@ -100,12 +116,18 @@ body {
   font-size: 0.9rem;
 }
 
-#regBtn {
-  color: #fd7c86;
+#regBtn,
+.forgotPw,
+.fa-key,
+.fa-envelope {
+  color: var(--info-blue);
 }
 
-.forgotPw {
-  color: #fd7c86;
+.iconInput {
+  width: 75%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /*REGISTER MODAL*/
@@ -122,20 +144,6 @@ body {
   transition: 0.4s;
 }
 
-#logBtn:hover {
-  background: var(--success-green);
-  color: var(--darker-grey);
-}
-
-.logForm {
-  width: 100%;
-  height: 75%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-}
-
 /*MAIN*/
 
 #mainSection {
@@ -147,11 +155,12 @@ body {
 .leftNav {
   width: 10%;
   height: 100%;
-  background-color: rgb(87, 87, 87);
+  background-color: var(--semi-white);
   padding-top: 3rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-right: 2px solid var(--lighter-grey);
 }
 
 .linkList {
@@ -164,21 +173,21 @@ body {
   flex-direction: column;
   width: 100%;
   text-align: center;
-  color: #f4f4f4;
+  color: var(--darker-grey);
 }
 
 .linkNav {
   text-decoration: none;
-  color: #f4f4f4;
+  color: var(--lighter-grey);
   width: 100%;
   padding: 0.5rem;
-  text-align: center;
+  text-align: left;
   transition: 0.2s;
   font-weight: 400;
 }
 
 .linkNav:hover a {
-  color: #fd7c86;
+  color: var(--info-blue);
 }
 .fas,
 .far {
@@ -194,7 +203,7 @@ body {
 .items {
   width: 90%;
   height: 100%;
-  background-color: #333;
+  background-color: var(--semi-white);
   display: flex;
   justify-content: space-evenly;
   align-content: flex-start;
@@ -237,22 +246,34 @@ body {
   height: 2rem;
   font-weight: 700;
   transition: 0.3s;
+  border-radius: 0.2rem;
+  cursor: pointer;
 }
 
 .borrarItem,
 .modalCloseBtn,
 .modalCancelBtn {
-  background-color: #fd7c86;
+  border: 1px solid var(--darker-grey);
+}
+
+.borrarItem,
+.modalCloseBtn,
+.modalCancelBtn {
+  background-color: var(--semi-white);
 }
 
 .imprimirItem,
 .modalSubmitBtn,
 .modalRegisterBtn {
-  background-color: #79ff8b;
+  background-color: var(--info-blue);
 }
 
 .borrarItem:hover,
-.imprimirItem:hover {
+.imprimirItem:hover,
+.modalSubmitBtn:hover,
+.modalCloseBtn:hover,
+.modalCancelBtn:hover,
+.modalRegisterBtn:hover {
   opacity: 0.7;
 }
 
@@ -280,14 +301,15 @@ body {
 }
 
 .modal {
-  width: 40%;
+  width: 30%;
   height: 50%;
-  background-color: #333;
+  background-color: var(--semi-white);
   display: flex;
   align-items: center;
   justify-content: space-evenly;
   flex-direction: column;
-  color: #f4f4f4;
+  color: var(--darker-grey);
+  border-radius: 1rem;
 }
 
 .modalBtns {
@@ -333,23 +355,14 @@ body {
 #modalPwd {
   background: none;
   border: none;
-  border-bottom: 2px solid #f4f4f4;
+  border-bottom: 2px solid var(--lighter-grey);
   outline: none;
   margin-top: 0.5rem;
   font-size: 1rem;
-  color: #f4f4f4;
-  width: 50%;
+  color: var(--darker-grey);
+  width: 80%;
   font-family: "Roboto", sans-serif;
-  background-image: linear-gradient(
-    90deg,
-    rgba(99, 0, 0, 1) 0%,
-    rgba(121, 9, 9, 1) 49%,
-    rgba(255, 255, 255, 1) 100%
-  );
-  background-size: 0% 2px;
-  background-repeat: no-repeat;
-  background-position: bottom left;
-  transition: 0.1s ease;
+  transition: 0.5s ease-in;
 }
 
 #modalDesc:focus,
@@ -363,7 +376,7 @@ body {
 #modalStore:focus,
 #optionsReg:focus,
 #modalPwd:focus {
-  background-size: 100% 2px;
+  border-bottom: 2px solid var(--info-blue);
 }
 
 option {
