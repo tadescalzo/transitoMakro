@@ -16,6 +16,7 @@ let modalDesc = document.querySelector("#modalDesc");
 let modalType = document.querySelector("#modalType");
 let modalOptions = document.querySelector("#options");
 let itemsSection = document.querySelector(".items");
+let itemsList = document.querySelector(".itemsList");
 let modalRegisterBtn = document.querySelector(".modalRegisterBtn");
 let modalCancelBtn = document.querySelector(".modalCancelBtn");
 let modalUser = document.querySelector("#modalUser");
@@ -211,23 +212,17 @@ firebase.auth().onAuthStateChanged((user) => {
 });
 
 printItem = (title, tkt, desc, urg, store, owner, date) => {
-  let model = `<div class="itemCard">
+  let model = `<li class="itemCard">
   <span class="itemCardTitle"> ${title}</span>
-  <hr class='itemCardLine' />
   <span class="itemCardTkt"> Ticket #${tkt}</span>
-  <hr class='itemCardLine' />
   <span class="itemCardDesc">${desc}</span>
-  <hr class='itemCardLine' />
   <span class="itemCardStatus">Estado: ${urg}</span>
-  <hr class='itemCardLine' />
   <span class='itemCardStore'>Enviado de tienda ${store}</span>
-  <hr class='itemCardLine' />
   <span class="itemCardOwner">Recepcionado por ${owner}</span>
   <span class='itemCardDate'>${date}</span>
-  <div>
   <input class="borrarItem" type="button" value="Borrar">
   <input class="imprimirItem" type="button" value="Imprimir">
-  </div>
-</div>`;
+
+</li>`;
   itemsSection.innerHTML += model;
 };

@@ -212,27 +212,12 @@ body {
 }
 
 .itemCard {
-  width: 20%;
-  height: 35%;
-  background-color: rgb(87, 87, 87);
+  width: 100%;
   display: flex;
-  align-content: center;
+  align-items: center;
   justify-content: space-evenly;
-  flex-direction: column;
-  text-align: center;
-  flex: 1 0 20%;
-  flex-grow: initial;
-  margin: 2rem;
-  border-radius: 0.3rem;
-  filter: drop-shadow(0 0 0.75rem #58585836);
-  color: #f4f4f4;
-}
-
-.itemCardLine {
-  width: 80%;
-  margin-top: 0;
-  margin-bottom: 0;
-  opacity: 0.2;
+  border-bottom: 2px solid var(--lighter-grey);
+  padding: 1rem;
 }
 
 .borrarItem,
@@ -285,6 +270,11 @@ body {
 .itemCardDesc,
 .itemCardOwner {
   font-weight: 300;
+}
+
+.borrarItem,
+.imprimirItem {
+  width: 7%;
 }
 
 /*MODAL SECTION*/
