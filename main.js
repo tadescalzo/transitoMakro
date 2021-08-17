@@ -149,7 +149,7 @@ firebase.auth().onAuthStateChanged((user) => {
       modalSection.style.display = "flex";
     });
 
-    regBtn.addEventListener("click", (e) => {
+    modalCloseBtn.addEventListener("click", (e) => {
       e.preventDefault();
       modalSection.style.display = "none";
       modalTitle.value = "";
@@ -220,9 +220,8 @@ printItem = (title, tkt, desc, urg, store, owner, date) => {
   <span class='itemCardStore'>Enviado de tienda ${store}</span>
   <span class="itemCardOwner">Recepcionado por ${owner}</span>
   <span class='itemCardDate'>${date}</span>
-  <input class="borrarItem" type="button" value="Borrar">
-  <input class="imprimirItem" type="button" value="Imprimir">
-
+  <span class='itemCardBtns'><input class="borrarItem" type="button" value="Borrar">
+  <input class="imprimirItem" type="button" value="Imprimir"> </span>
 </li>`;
   itemsSection.innerHTML += model;
 };

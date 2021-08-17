@@ -236,6 +236,16 @@ body {
 }
 
 .borrarItem,
+.imprimirItem {
+  width: 45%;
+}
+
+.itemCardBtns {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.borrarItem,
 .modalCloseBtn,
 .modalCancelBtn {
   border: 1px solid var(--darker-grey);
@@ -272,9 +282,17 @@ body {
   font-weight: 300;
 }
 
-.borrarItem,
-.imprimirItem {
-  width: 5%;
+.itemCardTitle,
+.itemCardTkt,
+.itemCardDesc,
+.itemCardStatus,
+.itemCardStore,
+.itemCardOwner,
+.itemCardDate,
+.itemCardBtns {
+  width: 12%;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 /*MODAL SECTION*/
