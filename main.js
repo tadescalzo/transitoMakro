@@ -27,6 +27,7 @@ let registerModal = document.querySelector("#registerModal");
 let registerInfo = document.querySelector("#registerInfo");
 let registerUser = document.querySelector("#registerUser");
 let registerStore = document.querySelector("#registerStore");
+let registerName = document.querySelector("#registerName");
 let infoRegBtn = document.querySelector("#infoRegBtn");
 let homeBtn = document.querySelector("#home");
 let itemList = new Array();
@@ -130,33 +131,70 @@ modalCancelBtn.addEventListener("click", () => {
   modalPwd.value = "";
 });
 
+linkAdd.addEventListener("click", (e) => {
+  e.preventDefault();
+  modalSection.style.display = "flex";
+});
+
+modalCloseBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  modalSection.style.display = "none";
+  modalTitle.value = "";
+  modalTkt.value = "";
+  modalDesc.value = "";
+  modalType.value = "";
+});
+
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     loginSection.style.display = "none";
     mainSection.style.display = "flex";
     navName.innerHTML = `Bienvenido ${user.displayName}`;
     itemsSection.innerHTML = "";
-
-    infoRegBtn.addEventListener("click", () => {
-      userId = uid;
+    /*FUNCION DE REGISTRO DE INFO ADICIONAL*/
+    infoRegBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      userId = user.uid;
       userName = registerUser.value;
       userStore = registerStore.value;
-      userMail = user.mail;
-      userDisplayname = user.displayName;
-
-      db.collection(uid)
-        .add({
-          first: "Ada",
-          last: "Lovelace",
-          born: 1815,
+      userMail = user.email;
+      userDisplayname = registerName.value;
+      db.collection("users")
+        .doc(userId)
+        .set({
+          userName: userName,
+          userStore: userStore,
+          userMail: userMail,
+          userStatus: "user",
+          userDisplayname: userDisplayname,
+          userId: userId,
         })
-        .then((docRef) => {
-          console.log("Document written with ID: ", docRef.id);
+        .then(() => {
+          console.log("Document successfully written!");
         })
         .catch((error) => {
-          console.error("Error adding document: ", error);
+          console.error("Error writing document: ", error);
         });
+      registerInfo.style.display = "none";
+      registerStore.value = "";
+      registerName.value = "";
+      registerUser.value = "";
     });
+
+    let docRef = db.collection("users").doc(user.uid);
+    docRef
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          console.log("Document data:", doc.data());
+        } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
+        }
+      })
+      .catch((error) => {
+        console.log("Error getting document:", error);
+      });
 
     db.collection("itemsTransito")
       .get()
@@ -164,7 +202,6 @@ firebase.auth().onAuthStateChanged((user) => {
         itemsSection.innerHTML = "";
         querySnapshot.forEach((doc) => {
           let indItem = doc.data();
-          console.log(doc);
           printItem(
             indItem.title,
             indItem.tkt,
@@ -180,19 +217,6 @@ firebase.auth().onAuthStateChanged((user) => {
       ? (itemsSection.innerHTML = `<div class='itemsEmpty'><h2>No hay ningun item</h2><i class="uil uil-frown"></i></div>`)
       : console.log("si hay items");
 
-    linkAdd.addEventListener("click", (e) => {
-      e.preventDefault();
-      modalSection.style.display = "flex";
-    });
-
-    modalCloseBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      modalSection.style.display = "none";
-      modalTitle.value = "";
-      modalTkt.value = "";
-      modalDesc.value = "";
-      modalType.value = "";
-    });
     modalSubmitBtn.addEventListener("click", (e) => {
       e.preventDefault();
       title = modalTitle.value;
@@ -203,6 +227,7 @@ firebase.auth().onAuthStateChanged((user) => {
       date = new Date().toLocaleDateString();
       store = user.photoURL;
       itemList.innerHTML = "";
+      userDb = user.uid;
       db.collection("itemsTransito")
         .add({
           title: this.title,
@@ -212,6 +237,7 @@ firebase.auth().onAuthStateChanged((user) => {
           store: this.store,
           owner: this.owner,
           date: this.date,
+          userDb: this.userDb,
         })
         .then((docRef) => {
           itemsSection.innerHTML = "";

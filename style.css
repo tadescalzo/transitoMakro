@@ -145,10 +145,6 @@ body {
   transition: 0.4s;
 }
 
-#registerInfo {
-  display: flex;
-}
-
 /*MAIN*/
 
 #mainSection {
@@ -414,8 +410,9 @@ body {
 #modalStore,
 #optionsReg,
 #modalPwd,
-#registerName,
-#registerStore {
+#registerUser,
+#registerStore,
+#registerName {
   background: none;
   border: none;
   border-bottom: 2px solid var(--lighter-grey);
@@ -428,8 +425,9 @@ body {
   transition: 0.5s ease-in;
 }
 
-#registerName,
-#registerStore {
+#registerUser,
+#registerStore,
+#registerName {
   width: 50%;
 }
 
@@ -444,8 +442,9 @@ body {
 #modalStore:focus,
 #optionsReg:focus,
 #modalPwd:focus,
-#registerName:focus,
-#registerStore:focus {
+#registerUser:focus,
+#registerStore:focus,
+#registerName:focus {
   border-bottom: 2px solid var(--info-blue);
 }
 
