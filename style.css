@@ -132,7 +132,8 @@ body {
 
 /*REGISTER MODAL*/
 
-#registerModal {
+#registerModal,
+#registerInfo {
   width: 100%;
   height: 100%;
   position: absolute;
@@ -144,6 +145,10 @@ body {
   transition: 0.4s;
 }
 
+#registerInfo {
+  display: flex;
+}
+
 /*MAIN*/
 
 #mainSection {
@@ -151,6 +156,8 @@ body {
   height: 100%;
   display: flex;
 }
+
+/*LEFT NAV*/
 
 .leftNav {
   width: 10%;
@@ -166,36 +173,65 @@ body {
 .linkList {
   list-style: none;
   padding-left: 0;
-  height: 15rem;
+  height: 20rem;
   display: flex;
   align-content: center;
   justify-content: space-evenly;
   flex-direction: column;
   width: 100%;
-  text-align: center;
-  color: var(--darker-grey);
-}
-
-.linkNav {
-  text-decoration: none;
-  color: var(--lighter-grey);
-  width: 100%;
-  padding: 0.5rem;
   text-align: left;
-  transition: 0.2s;
-  font-weight: 400;
-}
-
-.linkNav:hover a {
-  color: var(--info-blue);
-}
-.fas,
-.far {
-  margin-right: 0.8rem;
+  color: var(--darker-grey);
 }
 
 .navName {
   font-weight: 700;
+  margin-left: 1rem;
+}
+
+.navInput {
+  position: absolute;
+  transform: scale(0);
+}
+
+.navButton {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  color: var(--darker-grey);
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.navText {
+  transition: all 0.35s;
+}
+
+.navIcon {
+  font-size: 15px;
+  position: absolute;
+  left: 15%;
+  top: 10%;
+  transform: translateX(-30%);
+  color: var(--info-blue);
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.35s;
+}
+
+.navInput:checked ~ .navButton {
+  color: var(--info-blue);
+}
+
+.navInput:checked ~ .navButton .navIcon {
+  visibility: visible;
+  opacity: 1;
+}
+
+.navInput:checked ~ .navButton .navIcon {
+  transform: translateY(5px);
 }
 
 /*ITEMS*/
@@ -220,12 +256,20 @@ body {
   padding: 1rem;
 }
 
+.itemsEmpty {
+  text-align: center;
+  opacity: 0.4;
+  font-weight: 700;
+  font-size: 2rem;
+}
+
 .borrarItem,
 .imprimirItem,
 .modalSubmitBtn,
 .modalCloseBtn,
 .modalCancelBtn,
-.modalRegisterBtn {
+.modalRegisterBtn,
+#infoRegBtn {
   border: none;
   width: 40%;
   height: 2rem;
@@ -247,7 +291,8 @@ body {
 
 .borrarItem,
 .modalCloseBtn,
-.modalCancelBtn {
+.modalCancelBtn,
+#infoRegBtn {
   border: 1px solid var(--darker-grey);
 }
 
@@ -259,7 +304,8 @@ body {
 
 .imprimirItem,
 .modalSubmitBtn,
-.modalRegisterBtn {
+.modalRegisterBtn,
+#infoRegBtn {
   background-color: var(--info-blue);
 }
 
@@ -268,7 +314,8 @@ body {
 .modalSubmitBtn:hover,
 .modalCloseBtn:hover,
 .modalCancelBtn:hover,
-.modalRegisterBtn:hover {
+.modalRegisterBtn:hover,
+#infoRegBtn:hover {
   opacity: 0.7;
 }
 
@@ -350,6 +397,12 @@ body {
   width: 100%;
 }
 
+.fas,
+.far {
+  margin-top: 0.5rem;
+  margin-right: 0.5rem;
+}
+
 #modalDesc,
 #modalTkt,
 #modalTitle,
@@ -360,7 +413,9 @@ body {
 #modalEmail,
 #modalStore,
 #optionsReg,
-#modalPwd {
+#modalPwd,
+#registerName,
+#registerStore {
   background: none;
   border: none;
   border-bottom: 2px solid var(--lighter-grey);
@@ -373,6 +428,11 @@ body {
   transition: 0.5s ease-in;
 }
 
+#registerName,
+#registerStore {
+  width: 50%;
+}
+
 #modalDesc:focus,
 #modalTkt:focus,
 #modalTitle:focus,
@@ -383,7 +443,9 @@ body {
 #modalEmail:focus,
 #modalStore:focus,
 #optionsReg:focus,
-#modalPwd:focus {
+#modalPwd:focus,
+#registerName:focus,
+#registerStore:focus {
   border-bottom: 2px solid var(--info-blue);
 }
 

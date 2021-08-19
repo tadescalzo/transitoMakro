@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Welcome to Firebase Hosting</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 </head>
 
 <body>
@@ -27,7 +28,8 @@
         <a href="" class="forgotPw">¿Olvidaste tu contraseña?</a>
       </form>
     </div>
-    <section id="registerModal">
+
+    <div id="registerModal">
       <div class="modal">
       <div class="column">
         <label for="modalEmail">Ingrese su mail de Makro</label>
@@ -51,19 +53,107 @@
         <input class="modalCancelBtn" type="button" value="Cancelar">
       </div>
     </div>
-    </section>
+    </div>
+
+    <div id="registerInfo">
+      <div class="modal">
+        <div class="column">
+          <label for="registerName">Ingrese su usuario</label>
+          <input type="text" id="registerUser" maxlength="15">
+        </div>
+        <div class="column">
+          <label for="registerStore">Ingrese el numero de su tienda</label>
+          <input type="text" id="registerStore" maxlength="5">
+        </div>
+        <div class="column">
+          <input type="button" value="Terminar registro" id="infoRegBtn">
+        </div>
+      </div>
+    </div>
     
   </section>
   <section id="mainSection">
     <nav class="leftNav">
       <img class="logoImg" src="images/logo.png" alt="logo">
-      <ul class="linkList">
-        <li class="navName">Bienvenido</li>
-        <li class="linkNav"><a href="" id="linkAdd"><i class="far fa-plus-square"></i>Agregar item</a></li>
-        <li class="linkNav"><a href=""><i class="fas fa-store"></i>Items por tienda</a></li>
-        <li class="linkNav"><a href=""><i class="far fa-check-circle"></i>Ver items enviados</a></li>
-        <li class="linkNav"><a href="" id="logOut"><i class="fas fa-sign-out-alt"></i>Cerrar sesion</a></li>
-      </ul>
+      <div class="linkList">
+        <span class="navName">Bienvenido</span>
+
+        <label for="home">
+          <input 
+          type="radio"
+          id="home"
+          name="group"
+          class="navInput"
+          />
+          <span class="navButton">
+            <span class="navIcon uil uil-home"></span>
+            <span class="navText">
+              Home
+            </span>
+          </span>
+        </label>
+
+        <label for="linkAdd">
+          <input 
+          type="radio"
+          id="linkAdd"
+          name="group"
+          class="navInput"
+          />
+          <span class="navButton">
+            <span class="navIcon uil-plus-circle"></span>
+            <span class="navText">
+              Agregar item
+            </span>
+          </span>
+        </label>
+
+        <label for="statsBtn">
+          <input 
+          type="radio"
+          id="statsBtn"
+          name="group"
+          class="navInput"
+          />
+          <span class="navButton">
+            <span class="navIcon uil uil-analytics"></span>
+            <span class="navText">
+              Estadisticas
+            </span>
+          </span>
+        </label>
+
+        <label for="storeList">
+          <input 
+          type="radio"
+          id="storeList"
+          name="group"
+          class="navInput"
+          />
+          <span class="navButton">
+            <span class="navIcon uil uil-store"></span>
+            <span class="navText">
+              Tiendas
+            </span>
+          </span>
+        </label>
+
+        <label for="logOut">
+          <input 
+          type="radio"
+          id="logOut"
+          name="group"
+          class="navInput"
+          />
+          <span class="navButton">
+            <span class="navIcon uil uil-signout"></span>
+            <span class="navText">
+              Cerrar sesion
+            </span>
+          </span>
+        </label>
+
+      </div>
     </nav>
     <div class="items">
       <ul class="itemsList">
@@ -77,7 +167,7 @@
 
       <div class="column">
         <label for="modalTitle">Ingrese el titulo</label>
-        <input autocomplete="off" type="text" maxlength="10" id="modalTitle">
+        <input autocomplete="off" type="text" maxlength="20" id="modalTitle">
       </div>
 
       <div class="column">

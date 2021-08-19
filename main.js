@@ -24,6 +24,11 @@ let modalPwd = document.querySelector("#modalPwd");
 let modalEmail = document.querySelector("#modalEmail");
 let modalStore = document.querySelector("#modalStore");
 let registerModal = document.querySelector("#registerModal");
+let registerInfo = document.querySelector("#registerInfo");
+let registerUser = document.querySelector("#registerUser");
+let registerStore = document.querySelector("#registerStore");
+let infoRegBtn = document.querySelector("#infoRegBtn");
+let homeBtn = document.querySelector("#home");
 let itemList = new Array();
 var firebaseConfig = {
   apiKey: "AIzaSyAobg1h5aqprSpyT9T5XMtm9Z2H69z8T64",
@@ -37,6 +42,7 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.auth();
 var db = firebase.firestore();
+home.checked = true;
 
 logFunct = (email, password) => {
   firebase
@@ -115,10 +121,13 @@ modalRegisterBtn.addEventListener("click", () => {
   modalEmail.value = "";
   modalPwd.value = "";
   registerModal.style.display = "none";
+  registerInfo.style.display = "flex";
 });
 
 modalCancelBtn.addEventListener("click", () => {
   registerModal.style.display = "none";
+  modalEmail.value = "";
+  modalPwd.value = "";
 });
 
 firebase.auth().onAuthStateChanged((user) => {
@@ -127,11 +136,35 @@ firebase.auth().onAuthStateChanged((user) => {
     mainSection.style.display = "flex";
     navName.innerHTML = `Bienvenido ${user.displayName}`;
     itemsSection.innerHTML = "";
+
+    infoRegBtn.addEventListener("click", () => {
+      userId = uid;
+      userName = registerUser.value;
+      userStore = registerStore.value;
+      userMail = user.mail;
+      userDisplayname = user.displayName;
+
+      db.collection(uid)
+        .add({
+          first: "Ada",
+          last: "Lovelace",
+          born: 1815,
+        })
+        .then((docRef) => {
+          console.log("Document written with ID: ", docRef.id);
+        })
+        .catch((error) => {
+          console.error("Error adding document: ", error);
+        });
+    });
+
     db.collection("itemsTransito")
       .get()
       .then((querySnapshot) => {
+        itemsSection.innerHTML = "";
         querySnapshot.forEach((doc) => {
           let indItem = doc.data();
+          console.log(doc);
           printItem(
             indItem.title,
             indItem.tkt,
@@ -143,6 +176,9 @@ firebase.auth().onAuthStateChanged((user) => {
           );
         });
       });
+    itemsSection.innerHTML == ""
+      ? (itemsSection.innerHTML = `<div class='itemsEmpty'><h2>No hay ningun item</h2><i class="uil uil-frown"></i></div>`)
+      : console.log("si hay items");
 
     linkAdd.addEventListener("click", (e) => {
       e.preventDefault();
@@ -166,7 +202,7 @@ firebase.auth().onAuthStateChanged((user) => {
       owner = user.displayName;
       date = new Date().toLocaleDateString();
       store = user.photoURL;
-      console.log(title, tkt, desc, urg, owner, date, store);
+      itemList.innerHTML = "";
       db.collection("itemsTransito")
         .add({
           title: this.title,
@@ -218,7 +254,7 @@ printItem = (title, tkt, desc, urg, store, owner, date) => {
   <span class="itemCardDesc">${desc}</span>
   <span class="itemCardStatus">Estado: ${urg}</span>
   <span class='itemCardStore'>Enviado de tienda ${store}</span>
-  <span class="itemCardOwner">Recepcionado por ${owner}</span>
+  <span class="itemCardOwner">por ${owner}</span>
   <span class='itemCardDate'>${date}</span>
   <span class='itemCardBtns'><input class="borrarItem" type="button" value="Borrar">
   <input class="imprimirItem" type="button" value="Imprimir"> </span>
