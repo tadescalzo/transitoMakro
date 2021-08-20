@@ -169,15 +169,15 @@ firebase.auth().onAuthStateChanged((user) => {
           db.collection("itemsTransito")
             .get()
             .then((querySnapshot) => {
-              itemsSection.innerHTML = "";
               querySnapshot.forEach((doc) => {
                 let indItem = doc.data();
-                indItem.owner == userId
+                indItem.userDb == userId
                   ? userItems.push(indItem)
                   : console.log("nada");
-                console.log(userItems);
               });
             });
+          console.log(typeof userItems);
+          console.log(userItems);
         } else {
           registerInfo.style.display = "flex";
         }
@@ -185,24 +185,7 @@ firebase.auth().onAuthStateChanged((user) => {
       .catch((error) => {
         console.log("Error getting document:", error);
       });
-    db.collection("itemsTransito")
-      .get()
-      .then((querySnapshot) => {
-        itemsSection.innerHTML = "";
-        querySnapshot.forEach((doc) => {
-          let indItem = doc.data();
-          printItem(
-            indItem.title,
-            indItem.tkt,
-            indItem.desc,
-            indItem.urg,
-            indItem.store,
-            indItem.owner,
-            indItem.date
-          );
-          console.log(userItems);
-        });
-      });
+
     itemsSection.innerHTML == ""
       ? (itemsSection.innerHTML = `<div class='itemsEmpty'><h2>No hay ningun item</h2><i class="uil uil-frown"></i></div>`)
       : console.log("si hay items");
