@@ -31,6 +31,7 @@ let registerName = document.querySelector("#registerName");
 let infoRegBtn = document.querySelector("#infoRegBtn");
 let homeBtn = document.querySelector("#home");
 let itemList = new Array();
+let userItems = new Array();
 var firebaseConfig = {
   apiKey: "AIzaSyAobg1h5aqprSpyT9T5XMtm9Z2H69z8T64",
   authDomain: "transito-makro.firebaseapp.com",
@@ -151,51 +152,39 @@ firebase.auth().onAuthStateChanged((user) => {
     mainSection.style.display = "flex";
     navName.innerHTML = `Bienvenido ${user.displayName}`;
     itemsSection.innerHTML = "";
-    /*FUNCION DE REGISTRO DE INFO ADICIONAL*/
-    infoRegBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      userId = user.uid;
-      userName = registerUser.value;
-      userStore = registerStore.value;
-      userMail = user.email;
-      userDisplayname = registerName.value;
-      db.collection("users")
-        .doc(userId)
-        .set({
-          userName: userName,
-          userStore: userStore,
-          userMail: userMail,
-          userStatus: "user",
-          userDisplayname: userDisplayname,
-          userId: userId,
-        })
-        .then(() => {
-          console.log("Document successfully written!");
-        })
-        .catch((error) => {
-          console.error("Error writing document: ", error);
-        });
-      registerInfo.style.display = "none";
-      registerStore.value = "";
-      registerName.value = "";
-      registerUser.value = "";
-    });
-
     let docRef = db.collection("users").doc(user.uid);
     docRef
       .get()
       .then((doc) => {
         if (doc.exists) {
-          console.log("Document data:", doc.data());
+          let usuario = doc.data();
+          const {
+            userName,
+            userStatus,
+            userDisplayname,
+            userStore,
+            userMail,
+            userId,
+          } = usuario;
+          db.collection("itemsTransito")
+            .get()
+            .then((querySnapshot) => {
+              itemsSection.innerHTML = "";
+              querySnapshot.forEach((doc) => {
+                let indItem = doc.data();
+                indItem.owner == userId
+                  ? userItems.push(indItem)
+                  : console.log("nada");
+                console.log(userItems);
+              });
+            });
         } else {
-          // doc.data() will be undefined in this case
-          console.log("No such document!");
+          registerInfo.style.display = "flex";
         }
       })
       .catch((error) => {
         console.log("Error getting document:", error);
       });
-
     db.collection("itemsTransito")
       .get()
       .then((querySnapshot) => {
@@ -211,6 +200,7 @@ firebase.auth().onAuthStateChanged((user) => {
             indItem.owner,
             indItem.date
           );
+          console.log(userItems);
         });
       });
     itemsSection.innerHTML == ""
@@ -267,7 +257,37 @@ firebase.auth().onAuthStateChanged((user) => {
       modalTkt.value = "";
       modalDesc.value = "";
     });
+    /*FUNCION DE REGISTRO DE INFO ADICIONAL*/
+    infoRegBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      userId = user.uid;
+      userName = registerUser.value;
+      userStore = registerStore.value;
+      userMail = user.email;
+      userDisplayname = registerName.value;
+      db.collection("users")
+        .doc(userId)
+        .set({
+          userName: userName,
+          userStore: userStore,
+          userMail: userMail,
+          userStatus: "user",
+          userDisplayname: userDisplayname,
+          userId: userId,
+        })
+        .then(() => {
+          console.log("Document successfully written!");
+        })
+        .catch((error) => {
+          console.error("Error writing document: ", error);
+        });
+      registerInfo.style.display = "none";
+      registerStore.value = "";
+      registerName.value = "";
+      registerUser.value = "";
+    });
   } else {
+    userItems.length = 0;
     mainSection.style.display = "none";
     loginSection.style.display = "flex";
   }
