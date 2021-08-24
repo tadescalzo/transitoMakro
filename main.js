@@ -177,7 +177,6 @@ firebase.auth().onAuthStateChanged((user) => {
               });
             });
           console.log(typeof userItems);
-          console.log(userItems);
         } else {
           registerInfo.style.display = "flex";
         }
