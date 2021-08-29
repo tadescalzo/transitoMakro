@@ -32,6 +32,10 @@ let infoRegBtn = document.querySelector("#infoRegBtn");
 let homeBtn = document.querySelector("#home");
 let itemList = new Array();
 let userItems = new Array();
+let pruebita = [
+  { nombre: "vacio", apellido: "funciona" },
+  { nombre: "segunda", apellido: "linea" },
+];
 var firebaseConfig = {
   apiKey: "AIzaSyAobg1h5aqprSpyT9T5XMtm9Z2H69z8T64",
   authDomain: "transito-makro.firebaseapp.com",
@@ -166,17 +170,33 @@ firebase.auth().onAuthStateChanged((user) => {
             userMail,
             userId,
           } = usuario;
-          db.collection("itemsTransito")
-            .get()
-            .then((querySnapshot) => {
-              querySnapshot.forEach((doc) => {
-                let indItem = doc.data();
-                indItem.userDb == userId
-                  ? userItems.push(indItem)
-                  : console.log("nada");
-              });
+
+          function resolveAfter2Seconds() {
+            return new Promise((resolve) => {
+              db.collection("itemsTransito")
+                .get()
+                .then((querySnapshot) => {
+                  querySnapshot.forEach((doc) => {
+                    let indItem = doc.data();
+                    indItem.userDb == userId
+                      ? userItems.unshift(indItem)
+                      : console.log("nada");
+                  });
+                });
+              setTimeout(() => {
+                resolve(userItems);
+              }, 2000);
             });
-          console.log(typeof userItems);
+          }
+
+          async function asyncCall() {
+            console.log("calling");
+            const result = await resolveAfter2Seconds();
+            console.log(result);
+            // expected output: "resolved"
+          }
+
+          asyncCall();
         } else {
           registerInfo.style.display = "flex";
         }
