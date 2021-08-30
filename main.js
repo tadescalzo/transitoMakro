@@ -193,7 +193,7 @@ firebase.auth().onAuthStateChanged((user) => {
             console.log("calling");
             const result = await resolveAfter2Seconds();
             console.log(result);
-            // expected output: "resolved"
+            console.log(typeof result);
           }
 
           asyncCall();
