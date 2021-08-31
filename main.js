@@ -32,6 +32,7 @@ let infoRegBtn = document.querySelector("#infoRegBtn");
 let homeBtn = document.querySelector("#home");
 let itemList = new Array();
 let userItems = new Array();
+let resolved = false;
 let pruebita = [
   { nombre: "vacio", apellido: "funciona" },
   { nombre: "segunda", apellido: "linea" },
@@ -150,16 +151,19 @@ modalCloseBtn.addEventListener("click", (e) => {
   modalType.value = "";
 });
 
+/*verifica que haya usuario*/
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     loginSection.style.display = "none";
     mainSection.style.display = "flex";
     navName.innerHTML = `Bienvenido ${user.displayName}`;
     itemsSection.innerHTML = "";
+    /*buscamos en la base de datos la info del usuario*/
     let docRef = db.collection("users").doc(user.uid);
     docRef
       .get()
       .then((doc) => {
+        /*si existe el usuario guardamos los datos del mismo*/
         if (doc.exists) {
           let usuario = doc.data();
           const {
@@ -170,8 +174,9 @@ firebase.auth().onAuthStateChanged((user) => {
             userMail,
             userId,
           } = usuario;
-
+          /*en esta funcion guardamos todos los items que haya enviado este usuario en el array userItems*/
           function resolveAfter2Seconds() {
+            userItems.length = 0;
             return new Promise((resolve) => {
               db.collection("itemsTransito")
                 .get()
@@ -179,24 +184,75 @@ firebase.auth().onAuthStateChanged((user) => {
                   querySnapshot.forEach((doc) => {
                     let indItem = doc.data();
                     indItem.userDb == userId
-                      ? userItems.unshift(indItem)
+                      ? userItems.push(indItem)
                       : console.log("nada");
                   });
                 });
+              /*timeout para evitar bug*/
               setTimeout(() => {
                 resolve(userItems);
+                itemsSection.innerHTML == "";
               }, 2000);
             });
           }
 
+          /*funcion asincronica para hacer la busqueda de los items*/
           async function asyncCall() {
-            console.log("calling");
-            const result = await resolveAfter2Seconds();
-            console.log(result);
-            console.log(typeof result);
+            result = await resolveAfter2Seconds();
+            result.forEach((indItem) =>
+              printItem(
+                indItem.title,
+                indItem.tkt,
+                indItem.desc,
+                indItem.urg,
+                indItem.store,
+                indItem.owner,
+                indItem.date
+              )
+            );
           }
-
+          /*llamamos a la funcion que nos devuelve el array de objetos*/
           asyncCall();
+
+          /*modal para agregar item*/
+          modalSubmitBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            title = modalTitle.value;
+            tkt = modalTkt.value;
+            desc = modalDesc.value;
+            urg = modalOptions.options[modalOptions.selectedIndex].value;
+            owner = user.displayName;
+            date = new Date().toLocaleDateString();
+            store = user.photoURL;
+            userDb = user.uid;
+            /*AGREGAMOS ITEM A LA COLECCION DE ITEMS*/
+            db.collection("itemsTransito")
+              .add({
+                title: this.title,
+                tkt: this.tkt,
+                desc: this.desc,
+                urg: this.urg,
+                store: this.store,
+                owner: this.owner,
+                date: this.date,
+                userDb: this.userDb,
+              })
+              .then((docRef) => {
+                /*UNA VEZ AGREGADO EL ITEM A LA COLECCION SE CARGAN TODOS LOS ITEMS*/
+                asyncCall();
+                console.log("click");
+              })
+              .catch((error) => {
+                console.error("Error adding document: ", error);
+              });
+
+            modalSection.style.display = "none";
+            modalTitle.value = "";
+            modalTkt.value = "";
+            modalDesc.value = "";
+          });
+
+          /*si no existe documento de usuario se abre el modal para finalizar registro de usuario*/
         } else {
           registerInfo.style.display = "flex";
         }
@@ -205,60 +261,6 @@ firebase.auth().onAuthStateChanged((user) => {
         console.log("Error getting document:", error);
       });
 
-    itemsSection.innerHTML == ""
-      ? (itemsSection.innerHTML = `<div class='itemsEmpty'><h2>No hay ningun item</h2><i class="uil uil-frown"></i></div>`)
-      : console.log("si hay items");
-
-    modalSubmitBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      title = modalTitle.value;
-      tkt = modalTkt.value;
-      desc = modalDesc.value;
-      urg = modalOptions.options[modalOptions.selectedIndex].value;
-      owner = user.displayName;
-      date = new Date().toLocaleDateString();
-      store = user.photoURL;
-      itemList.innerHTML = "";
-      userDb = user.uid;
-      db.collection("itemsTransito")
-        .add({
-          title: this.title,
-          tkt: this.tkt,
-          desc: this.desc,
-          urg: this.urg,
-          store: this.store,
-          owner: this.owner,
-          date: this.date,
-          userDb: this.userDb,
-        })
-        .then((docRef) => {
-          itemsSection.innerHTML = "";
-          db.collection("itemsTransito")
-            .get()
-            .then((querySnapshot) => {
-              querySnapshot.forEach((doc) => {
-                let indItem = doc.data();
-                printItem(
-                  indItem.title,
-                  indItem.tkt,
-                  indItem.desc,
-                  indItem.urg,
-                  indItem.store,
-                  indItem.owner,
-                  indItem.date
-                );
-              });
-            });
-        })
-        .catch((error) => {
-          console.error("Error adding document: ", error);
-        });
-
-      modalSection.style.display = "none";
-      modalTitle.value = "";
-      modalTkt.value = "";
-      modalDesc.value = "";
-    });
     /*FUNCION DE REGISTRO DE INFO ADICIONAL*/
     infoRegBtn.addEventListener("click", (e) => {
       e.preventDefault();
